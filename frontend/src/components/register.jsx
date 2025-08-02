@@ -1,26 +1,23 @@
-// components/Login.jsx
+// components/Register.jsx
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-function Login() {
+function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleRegister = (e) => {
         e.preventDefault();
-        // Dummy auth for example
-        if (email === 'user@example.com' && password === 'password') {
-            navigate('/chat');
-        } else {
-            alert('Invalid credentials');
-        }
+        // Here, you would normally call your API to register the user
+        alert('Registered successfully!');
+        navigate('/');
     };
 
     return (
-        <div style={styles.container}>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin} style={styles.form}>
+        <div style={{ ...styles.container }}>
+            <h2>Register</h2>
+            <form onSubmit={handleRegister} style={styles.form}>
                 <input
                     type="email"
                     placeholder="Email"
@@ -37,9 +34,9 @@ function Login() {
                     required
                     style={styles.input}
                 />
-                <button type="submit" style={styles.button}>Login</button>
+                <button type="submit" style={styles.button}>Register</button>
             </form>
-            <p>New here? <Link to="/register">Register</Link></p>
+            <p>Already have an account? <Link to="/">Login</Link></p>
         </div>
     );
 }
@@ -66,7 +63,7 @@ const styles = {
     button: {
         padding: '0.75rem',
         fontSize: '1rem',
-        backgroundColor: '#007bff',
+        backgroundColor: '#28a745',
         color: 'white',
         border: 'none',
         borderRadius: '4px',
@@ -74,4 +71,4 @@ const styles = {
     }
 };
 
-export default Login;
+export default Register;
