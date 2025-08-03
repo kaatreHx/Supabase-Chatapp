@@ -1,16 +1,28 @@
-// components/Login.jsx
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        // Dummy auth for example
-        if (email === 'user@example.com' && password === 'password') {
+        const user = await fetch('http://localhost:8000/users/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,
+                password,
+            }),
+        });
+        if (user.ok) {
+            const data = await user.json();
+            localStorage.setItem('user', data.user);
+            localStorage.setItem('access', data.access);
+            localStorage.setItem('refresh', data.refresh);
             navigate('/chat');
         } else {
             alert('Invalid credentials');
@@ -22,10 +34,10 @@ function Login() {
             <h2>Login</h2>
             <form onSubmit={handleLogin} style={styles.form}>
                 <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    type="username"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                     style={styles.input}
                 />
