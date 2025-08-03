@@ -1,15 +1,25 @@
-// components/Register.jsx
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Register() {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [confirm_password, setConfirmPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
-        // Here, you would normally call your API to register the user
+        const user = await fetch('http://localhost:8000/users/profile/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,
+                password,
+                confirm_password,
+            }),
+        });
         alert('Registered successfully!');
         navigate('/');
     };
@@ -19,10 +29,10 @@ function Register() {
             <h2>Register</h2>
             <form onSubmit={handleRegister} style={styles.form}>
                 <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                     style={styles.input}
                 />
@@ -31,6 +41,14 @@ function Register() {
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
+                    style={styles.input}
+                />
+                <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={confirm_password}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                     style={styles.input}
                 />
