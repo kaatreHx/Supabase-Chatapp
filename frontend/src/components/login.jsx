@@ -20,7 +20,7 @@ function Login() {
         });
         if (user.ok) {
             const data = await user.json();
-            localStorage.setItem('user', data.user);
+            localStorage.setItem('user', JSON.stringify(data.user));
             localStorage.setItem('access', data.access);
             localStorage.setItem('refresh', data.refresh);
             navigate('/chat');
