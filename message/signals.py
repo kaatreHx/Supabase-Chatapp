@@ -4,7 +4,7 @@ from .models import Message
 from .utils import send_chat_message
 
 @receiver(post_save, sender=Message)
-def push_chat_to_supabase(sender, instance, created, **kwargs):
+def push_chat_to_supabase(instance, created, **kwargs):
     if created:
         try:
             send_chat_message(instance.sender.id, instance.recipient.id, instance.content)
